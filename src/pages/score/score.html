@@ -1,0 +1,51 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-item>
+      <ion-title>Score Card</ion-title>
+      <button ion-button item-right (click)="switchtohome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      {{username}}
+    </ion-card-header>
+    <ion-list>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>No of Attempted SET: {{userattemptset}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Correct answers: {{usercorrectans}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Wrong answers: {{userwrongans}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Not Attempted: {{usernotattempt}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Total Marks: {{usermarks}}</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-list>
+  </ion-card>
+  <button ion-button full round (click)="resendData()" *ngIf="!sync_togg">Resend</button>
+  <!-- <ion-label>Question Summary</ion-label> -->
+  <!-- <ion-list *ngFor="let l of question_set;let i = index">
+    <button ion-button round [ngStyle]="{'background-color': button_color[i]}" (click)="selectedSlide(i)">{{l.questionId}}</button>
+  </ion-list> -->
+  <!-- <ion-row>
+    <ion-col *ngFor="let l of question_set;let i = index">
+      <button ion-button round [ngStyle]="{'background-color': button_color[i]}" (click)="selectedSlide(i)">{{l.questionId}}</button>
+    </ion-col>
+  </ion-row> -->
+
+</ion-content>

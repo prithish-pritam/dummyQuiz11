@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar>
+    <div text-center><h3 style="color: #fff;">Question Set</h3></div>
+        <!-- <ion-title text-center>Question Set</ion-title> -->
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list *ngFor="let l of setarr; let i= index" no-padding>
+    <ion-item class="itemStyle">
+      <ion-label (click)="jumptoQues(l.setname)">
+        <span>{{l.setname}}</span>
+        <div class="decoration"></div>
+        <p style="margin-top: 10px;">Total No. of Question: {{l.noofques}}</p>
+        <p>Marks per question: {{l.permarks}}</p>
+        <p>Total Duration: {{l.duration}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

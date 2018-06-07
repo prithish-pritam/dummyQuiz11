@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle="left" start color="white">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title colors="primary" text-center>
+      Learning App Demo
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col col-6>
+        <ion-card (click)="gotoSetlanding('landing')">
+          <ion-card-header>
+            <img src="./assets/images/test.svg" style="width: 100px;">
+          </ion-card-header>
+          <!-- <ion-card-content>Practise Test</ion-card-content> -->
+          <p text-center>Practice Test</p>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card (click)="gotoSetlanding('score')">
+          <ion-card-header>
+            <img src="./assets/images/test-result.svg" style="width: 100px;">
+          </ion-card-header>
+          <p text-center>Test Result</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
