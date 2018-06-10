@@ -41,6 +41,7 @@ export class QuestionPage {
   next_togg: boolean= true;
   qus_submit_togg: boolean= true;
   bullet_arr=['a','b','c','d','e'];
+  btn_slid_navindex: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public alrtCtrl: AlertController,public rest : RestProvider,
   public sqlite: LitesqlProvider) {
@@ -253,32 +254,68 @@ submitresult(){
 
 goTopreslide(){
   this.next_togg=true;
-  let currentIndex = this.slides.getActiveIndex();
-  console.log("CurrentIndex:", currentIndex);
-  let slideindex= currentIndex-1;
-  if(slideindex ==0){
-    this.prev_togg=false;
+  let slideindex : any;
+  if(this.btn_slid_navindex){//for button press
+    slideindex=this.btn_slid_navindex-1;
+    if(slideindex==0){
+      this.prev_togg=false;
+    }
+    else{
+      this.slides.slideTo(slideindex, 500);
+    }
+    this.btn_slid_navindex=null;
   }
-  this.slides.slideTo(slideindex, 500);
+  else{//for previous button
+    let currentIndex = this.slides.getActiveIndex();
+    console.log("CurrentIndex:", currentIndex);
+    slideindex= currentIndex-1;
+    if(slideindex ==0){
+      this.prev_togg=false;
+    }
+    this.slides.slideTo(slideindex, 500);
+  }
+  
 }
 
 goTonextslide(){
   this.prev_togg=true;
   let totlen= this.ques_arr.length;
   let setlen= totlen-2;
-  let currentIndex = this.slides.getActiveIndex();
-  console.log("CurrentIndex:", currentIndex);
-  if(currentIndex == setlen){
+  let slideindex : any;
+  if(this.btn_slid_navindex){
+    let ansstrLen= totlen-1;
+    if(this.btn_slid_navindex==ansstrLen){
+      this.next_togg=false;
+      this.qus_submit_togg=false;
+    }else{
+      slideindex=this.btn_slid_navindex+1;
+      this.slides.slideTo(slideindex, 500);
+    }
+    this.btn_slid_navindex=null;
+  }else{
+    let currentIndex = this.slides.getActiveIndex();
+    console.log("CurrentIndex:", currentIndex);
+    if(currentIndex == setlen){
     this.next_togg=false;
     this.qus_submit_togg=false;
+    }
+    slideindex= currentIndex+1;
+    this.slides.slideTo(slideindex, 500);
   }
-  let slideindex= currentIndex+1;
-  this.slides.slideTo(slideindex, 500);
+  
 }
 
 selectedSlide(index){
   this.prev_togg=true;
   this.next_togg=true;
+  this.btn_slid_navindex=index;  
+  console.log("button current index",this.btn_slid_navindex);
+  if(this.btn_slid_navindex==0){
+    this.prev_togg=false;
+  }else if(this.btn_slid_navindex == (this.ques_arr.length-1)){
+    this.next_togg=false;
+    this.qus_submit_togg=false;
+  }
   this.slides.slideTo(index, 500);
 }
 
@@ -302,7 +339,7 @@ storeAnstoDB(){
 
 ansSubmit(){
   this.pauseTimer();
-  this.submitresult;
+  this.submitresult();
   setTimeout(()=>{
     this.storeAnstoDB();
   },500);
@@ -311,7 +348,7 @@ ansSubmit(){
       ques_ans: this.ques_arr,
       aswer_arr: this.answer_stack
     });
-  },500);
+  },1000);
 }
 
 }

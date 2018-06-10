@@ -16,65 +16,55 @@
 
 <ion-content>
 
-  <!-- implement timmer -->
-  <!-- <div text-center>
-    <ion-item>
-      <h1 text-center>{{displayTime}}</h1>
-    </ion-item>
-  </div> -->
-  <!-- <button ion-button menuToggle right>
-    <ion-icon ios="ios-person" md="md-person"></ion-icon>
-  </button> -->
-
-  <ion-slides>
-    <ion-list *ngFor="let l of ques_arr; let i=index">
-      <ion-slide>
-        <ion-card>
-          <ion-card-header>
-            <ion-item>
-              <ion-label text-wrap style="font-size: 15px;">Q.{{i+1}} {{l.ques}}</ion-label>
-            </ion-item>
-          </ion-card-header>
-          <div class="decoration"></div>
-          <ion-card-content>
-            <ion-list>
-              <ion-list radio-group>
-                <ion-item *ngFor="let opt of l.opts; let j= index">
-                  <ion-label text-wrap style="font-size: 15px;">{{bullet_arr[j]}}. {{opt}}</ion-label>
-                  <ion-radio [value]="j" (ionSelect)="setans(bullet_arr[j],i)" item-left></ion-radio>
-                </ion-item>
-              </ion-list>
+  <ion-slides style="height: auto !important;">
+    <!-- <ion-list *ngFor="let l of ques_arr; let i=index"> -->
+    <ion-slide *ngFor="let l of ques_arr; let i=index">
+      <ion-card>
+        <ion-card-header>
+          <ion-item>
+            <ion-label text-wrap style="font-size: 15px;">Q.{{i+1}} {{l.ques}}</ion-label>
+          </ion-item>
+        </ion-card-header>
+        <div class="decoration"></div>
+        <ion-card-content>
+          <ion-list>
+            <ion-list radio-group>
+              <ion-item *ngFor="let opt of l.opts; let j= index">
+                <ion-label text-wrap style="font-size: 15px;">{{bullet_arr[j]}}. {{opt}}</ion-label>
+                <ion-radio [value]="j" (ionSelect)="setans(bullet_arr[j],i)" item-left></ion-radio>
+              </ion-item>
             </ion-list>
-          </ion-card-content>
-          <ion-row>
-            <ion-col col-6>
-              <button ion-button clear (click)="goTopreslide()" item-start *ngIf="prev_togg">
-                <ion-icon name="arrow-round-back" color="dark"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col col-6>
-              <button ion-button clear (click)="goTonextslide()" *ngIf="next_togg">
-                <ion-icon name="arrow-round-forward" color="dark"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-row>
-        </ion-card>
-      </ion-slide>
-    </ion-list>
+          </ion-list>
+        </ion-card-content>
+        <ion-row>
+          <ion-col col-6>
+            <button ion-button clear (click)="goTopreslide()" item-start *ngIf="prev_togg">
+              <ion-icon name="arrow-round-back" color="dark"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col col-6>
+            <button ion-button clear (click)="goTonextslide()" *ngIf="next_togg">
+              <ion-icon name="arrow-round-forward" color="dark"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-slide>
+    <!-- </ion-list> -->
   </ion-slides>
-  <ion-item>
-    <button ion-button full round (click)="ansSubmit()">Submit</button>
-  </ion-item>
-  
+  <div text-center>
+    <button ion-button outline (click)="ansSubmit()" *ngIf="!qus_submit_togg">Submit</button>
+  </div>
+
 </ion-content>
 <ion-footer>
   <ion-slides>
-  <ion-row>
-    <ion-slide>
-      <ion-col *ngFor="let l of ques_arr; let i=index">
-        <button ion-button round (click)="selectedSlide(i)">{{i+1}}</button>
-      </ion-col>
-    </ion-slide>
-  </ion-row>
-</ion-slides>
+    <ion-row>
+      <ion-slide>
+        <ion-col *ngFor="let l of ques_arr; let i=index">
+          <button ion-button round (click)="selectedSlide(i)">{{i+1}}</button>
+        </ion-col>
+      </ion-slide>
+    </ion-row>
+  </ion-slides>
 </ion-footer>
