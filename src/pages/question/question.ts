@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Slides } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Slides, Platform } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest/rest';
 import { ScorePage} from '../score/score';
 import { LandingPage} from '../landing/landing';
@@ -43,8 +43,11 @@ export class QuestionPage {
   bullet_arr=['a','b','c','d','e'];
   btn_slid_navindex: any;
 
+  // Property used to store the callback of the event handler to unsubscribe to it when leaving this page
+  public unregisterBackButtonAction: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,public alrtCtrl: AlertController,public rest : RestProvider,
-  public sqlite: LitesqlProvider) {
+  public sqlite: LitesqlProvider,public platform : Platform) {
       this.tmduration= this.navParams.get('examtime');
          
     ///access question from db
@@ -67,6 +70,23 @@ export class QuestionPage {
       this.presentConfirm();
     }).catch(err=>{console.log("Generated Error",err);});
   }
+
+  ionViewDidEnter() {
+    this.initializeBackButtonCustomHandler();
+}
+
+ionViewWillLeave() {
+    // Unregister the custom back button action for this page
+    this.unregisterBackButtonAction && this.unregisterBackButtonAction();
+}
+
+public initializeBackButtonCustomHandler(): void {
+    this.unregisterBackButtonAction = this.platform.registerBackButtonAction(() => {
+      console.log("Prevent hardware back button");
+        //this.customHandleBackButton();
+    }, 101);
+}
+
   
   ngOnInit() {
     this.initTimer(this.tmduration);
